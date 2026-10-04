@@ -1,0 +1,97 @@
+ÿþconst multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+
+
+const uploadFolder = path.join(
+    __dirname,
+    "..",
+    "uploads",
+    "products"
+);
+
+if (!fs.existsSync(uploadFolder)) {
+    fs.mkdirSync(uploadFolder, {
+        recursive: true
+    });
+}
+
+const storage = multer.diskStorage({
+
+    destination: (req, file, cb=> {
+
+        cb(null, uploadFolder);
+
+    },
+
+    filename: (req, file, cb) => {
+
+        const extension =
+            path.extname(file.originalname);
+
+        const uniqueName =
+            Date.now() +
+            "-" +
+            Math.round(Math.random(* 1E9) +
+            extension;
+
+        cb(null, uniqueName);
+
+    }
+
+});
+
+
+const upload = multer({
+
+    storage: storage,
+
+    limits: {
+        fileSize: 5 * 1024 * 1024
+    },
+
+    fileFilter: (req, file, cb) => {
+
+        const allowedExtensions = [
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".webp",
+            ".jfif"
+        ];
+
+        const extension =
+            path
+                .extname(file.originalname)
+                .toLowerCase();
+
+        const allowedMimeTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "image/jfif"
+        ];
+
+        if (
+            allowedExtensions.includes(extension&&
+            allowedMimeTypes.includes(file.mimetype)
+        {
+
+            cb(null, true);
+
+        } else {
+
+            cb(
+                new Error(
+                    "Only JPG, JPEG, PNG, WEBP and JFIF images are allowed"
+                )
+            );
+
+        }
+
+    }
+
+});
+
+
+module.exports = upload;
