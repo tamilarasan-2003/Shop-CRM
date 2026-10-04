@@ -13,7 +13,7 @@ function Sidebar({ isOpen, setIsOpen }) {
     {
       icon: <LayoutDashboard className="w-6 h-6" />,
       title: "Dashboard",
-      path: "/",
+      path: "/product-dashboard",
     },
     {
       icon: <ShoppingBag className="w-6 h-6" />,
@@ -28,7 +28,7 @@ function Sidebar({ isOpen, setIsOpen }) {
     {
       icon: <ClipboardList className="w-6 h-6" />,
       title: "Orders",
-      path: "/orders",
+      path: "/order-item",
     },
     {
       icon: <Users className="w-6 h-6" />,
